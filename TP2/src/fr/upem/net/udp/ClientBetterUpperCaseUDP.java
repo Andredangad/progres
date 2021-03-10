@@ -3,6 +3,8 @@ package fr.upem.net.udp;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.BufferOverflowException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.charset.Charset;
@@ -32,12 +34,21 @@ public class ClientBetterUpperCaseUDP {
 	 */
 	public static Optional<String> decodeMessage(ByteBuffer buffer) {
 		buffer.flip();
-		var charsetName = buffer.get(4);
-		ByteBuffer bb = ;
-		System.out.println(ASCII_CHARSET.decode(charsetName));
-		var decode = ASCII_CHARSET.decode(buffer).toString();
-		return Optional.of(decode);
-//		return Optional.empty();
+
+		try{
+			var charsetSize = buffer.getInt();
+			var initialBufferSize = buffer.limit();
+			buffer.limit(charsetSize + 4);
+			var charsetName = ASCII_CHARSET.decode(buffer).toString();
+			if(!Charset.isSupported(charsetName)){
+				return Optional.empty();
+			}
+			buffer.limit(initialBufferSize);
+
+			return Optional.of(Charset.forName(charsetName).decode(buffer).toString());
+		} catch (BufferUnderflowException | IllegalArgumentException e) {
+			return Optional.empty();
+		}
 	}
 
 	/**
