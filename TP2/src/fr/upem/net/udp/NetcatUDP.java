@@ -33,13 +33,14 @@ public class NetcatUDP {
                 String line = scan.nextLine();
 
                 try(DatagramChannel dc = DatagramChannel.open()){ ;
-                    ByteBuffer bb1 = cs.encode(line);
-                    dc.send(bb1, server);
+                    bb = cs.encode(line);
+                    dc.send(bb, server);
+                    bb.clear();
                     InetSocketAddress exp=(InetSocketAddress) dc.receive(bb);
                     bb.flip();
                     System.out.println("Received "+ bb.remaining() + " bytes from "+ exp);
                     System.out.println("String: "+ cs.decode(bb));
-                    bb1.clear();
+
                     bb.clear();
                 }
             }

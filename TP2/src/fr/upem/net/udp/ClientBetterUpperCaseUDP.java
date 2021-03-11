@@ -8,6 +8,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Scanner;
@@ -34,31 +35,36 @@ public class ClientBetterUpperCaseUDP {
 	 */
 	public static Optional<String> decodeMessage(ByteBuffer buffer) {
 		buffer.flip();
+		if(buffer.remaining()<4){
+			return Optional.empty();
+		}
+		var charsetSize = buffer.getInt();
+		var initialBufferSize = buffer.limit();
+		if(buffer.limit() < charsetSize+4){
+			return Optional.empty();
+		}
+		buffer.limit(charsetSize + 4);
 
 		try{
-			var charsetSize = buffer.getInt();
-			var initialBufferSize = buffer.limit();
-			buffer.limit(charsetSize + 4);
 			var charsetName = ASCII_CHARSET.decode(buffer).toString();
 			if(!Charset.isSupported(charsetName)){
 				return Optional.empty();
 			}
 			buffer.limit(initialBufferSize);
-
 			return Optional.of(Charset.forName(charsetName).decode(buffer).toString());
-		} catch (BufferUnderflowException | IllegalArgumentException e) {
+		} catch (IllegalCharsetNameException e) {
 			return Optional.empty();
 		}
 	}
 
 	/**
-	 * Creates and returns an Optional containing a new ByteBuffer containing the encoded representation 
-	 * of the String <code>msg</code> using the charset <code>charsetName</code> 
+	 * Creates and returns an Optional containing a new ByteBuffer containing the encoded representation
+	 * of the String <code>msg</code> using the charset <code>charsetName</code>
 	 * in the following format:
 	 * - the size (as a Big Indian int) of the charsetName encoded in ASCII<br/>
 	 * - the bytes encoding this charsetName in ASCII<br/>
 	 * - the bytes encoding the String msg in this charset.<br/>
-	 * The returned ByteBuffer is in <strong>write mode</strong> (i.e. need to 
+	 * The returned ByteBuffer is in <strong>write mode</strong> (i.e. need to
 	 * be flipped before to be used).
 	 * If the buffer is larger than MAX_PACKET_SIZE bytes, then returns Optional.empty.
 	 *
@@ -68,8 +74,21 @@ public class ClientBetterUpperCaseUDP {
 	 *         or an empty Optional if the buffer would be larger than 1024
 	 */
 	public static Optional<ByteBuffer> encodeMessage(String msg, String charsetName) {
-		// TODO
-		return Optional.empty();
+		ByteBuffer bb = ByteBuffer.allocate(MAX_PACKET_SIZE);
+		if(!Charset.isSupported(charsetName)){
+			return Optional.empty();
+		}
+		var encodedMsg = Charset.forName(charsetName).encode(msg);
+		var encodedCharset = ASCII_CHARSET.encode(charsetName);
+		var charsetSize = encodedCharset.limit();
+		var totalSize = 4 + charsetSize + encodedMsg.limit();
+		bb.putInt(charsetSize);
+		bb.put(ASCII_CHARSET.encode(charsetName));
+		if(totalSize > MAX_PACKET_SIZE){
+			return Optional.empty();
+		}
+		bb.put(Charset.forName(charsetName).encode(msg));
+		return Optional.of(bb);
 	}
 
 	public static void usage() {
