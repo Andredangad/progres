@@ -39,22 +39,20 @@ public class ClientBetterUpperCaseUDP {
 			return Optional.empty();
 		}
 		var charsetSize = buffer.getInt();
+		if(charsetSize < 0){
+			return Optional.empty();
+		}
 		var initialBufferSize = buffer.limit();
 		if(buffer.limit() < charsetSize+4){
 			return Optional.empty();
 		}
 		buffer.limit(charsetSize + 4);
-
-		try{
-			var charsetName = ASCII_CHARSET.decode(buffer).toString();
-			if(!Charset.isSupported(charsetName)){
-				return Optional.empty();
-			}
-			buffer.limit(initialBufferSize);
-			return Optional.of(Charset.forName(charsetName).decode(buffer).toString());
-		} catch (IllegalCharsetNameException e) {
+		var charsetName = ASCII_CHARSET.decode(buffer).toString();
+		if(!Charset.isSupported(charsetName) || charsetName.isEmpty()){
 			return Optional.empty();
 		}
+		buffer.limit(initialBufferSize);
+		return Optional.of(Charset.forName(charsetName).decode(buffer).toString());
 	}
 
 	/**

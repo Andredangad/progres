@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1adff8ad-534d-416a-b00e-607111799340" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/TP2/DANG_TP2.zip" beforeDir="false" afterPath="$PROJECT_DIR$/TP2/DANG_TP2.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TP2/out/production/TP2/fr/upem/net/udp/ClientBetterUpperCaseUDP.class" beforeDir="false" afterPath="$PROJECT_DIR$/TP2/out/production/TP2/fr/upem/net/udp/ClientBetterUpperCaseUDP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TP2/src/fr/upem/net/udp/ClientBetterUpperCaseUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/TP2/src/fr/upem/net/udp/ClientBetterUpperCaseUDP.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1pfA7VGJmsE4OIKpUsLK2s073Oh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1adff8ad-534d-416a-b00e-607111799340" name="Default Changelist" comment="" />
+      <created>1615563608995</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615563608995</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="217" width="430" height="514" key="FileChooserDialogImpl" timestamp="1615563649233">
+      <screen x="0" y="31" width="1920" height="880" />
+    </state>
+    <state x="740" y="217" width="430" height="514" key="FileChooserDialogImpl/0.31.1920.880@0.31.1920.880" timestamp="1615563649233" />
+    <state x="287" y="85" width="1341" height="776" key="new project wizard" timestamp="1615563656657">
+      <screen x="0" y="31" width="1920" height="880" />
+    </state>
+    <state x="287" y="85" width="1341" height="776" key="new project wizard/0.31.1920.880@0.31.1920.880" timestamp="1615563656657" />
+  </component>
+</project>
